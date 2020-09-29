@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.usersMapper">
+	<select id="getMaxSeqno" resultType="Integer">
+		select max(seqno) from bbs
+	</select>
+	<insert id="putBBS" parameterType="model.Bbs">
+		insert into bbs
+		values(#{seqno},#{title},#{content},#{id},#{bbs_date})
+	</insert>
+	<select id="selectMember" parameterType="String"
+		resultType="model.Custom_info">
+		select * from Custom_info
+		where id = #{id}
+		<!-- #{}는 my batis 문법 -->
+	</select>
+	<select id="getBBS" resultType="model.Bbs"
+		parameterType="Integer">
+		<!-- rownum의 역할이란? 일련번호? -->
+		select seqno, title, id, bbs_date from
+		(select rownum rn, seqno, title,
+		id, bbs_date
+		from (select * from bbs
+		order by seqno desc))
+		where (rn >
+		((#{no}-1)*5)) and (rn <![CDATA[<]]>((#{no}-1)*5)+6)
+	</select>
+	<select id="getBBSCount" resultType="Integer">
+		select count(*) from bbs
+	</select>
+	<select id="getBBSRead" parameterType="Integer"
+		resultType="model.Bbs">
+		select * from bbs where seqno = #{seqno}
+	</select>
+	<insert id="putMember" parameterType="model.Custom_info">
+		insert into Custom_info
+		values(#{id},#{password},#{name},#{addr},#{email},#{gender},#{job})
+	</insert>
+	<select id="getItemID" parameterType="String"
+		resultType="Integer">
+		select count(*) from selling_item where code = #{code}
+	</select>
+	<insert id="putItem" parameterType="model.Item">
+		insert into selling_item
+		values(#{code},#{name},#{price},#{info},#{origin})
+	</insert>
+	<select id="selectItem" resultType="model.Item">
+		select * from selling_item
+	</select>
+	<select id="getItemCount" resultType="Integer">
+		select count(*) from
+		selling_item
+	</select>
+	<select id="getItems" resultType="model.Item" parameterType="Integer">
+	select code, name, price, info, origin from
+		(select rownum rn, code, name,
+		price, info, origin from selling_item)
+		where rn > (#{pagenum}-1)*5
+		and rn <![CDATA[<]]> (((#{pagenum}-1)*5)+6)
+	</select>
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.baseballMapper">
+	<select id="getHometown" resultType="String">
+		select name from baseball_hometown
+	</select>
+	<select id="getId" resultType="Integer">
+		select max(id) from baseball_team
+	</select>
+	<insert id="putBaseballTeam" parameterType="model.BaseballTeam">
+		insert into
+		baseball_team
+		values(#{id},#{name},#{hometown},#{owner},#{intro},#{birth})
+	</insert>
+	<select id="getBaseballTeam" resultType="model.BaseballTeam">
+	select * from baseball_team
+	</select>
+</mapper>
