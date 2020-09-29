@@ -19,7 +19,7 @@ import model.CartItem;
 /**
  * Servlet implementation class CartListServlet
  */
-@WebServlet("/cartList")
+@WebServlet("/cartList.do")
 public class CartListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -63,7 +63,7 @@ public class CartListServlet extends HttpServlet {
 			// DTO에 장바구니에 있는 상품코드와 상품갯수를 저장한다.
 		}
 		// 장바구니 목록을 출력하는 뷰(cartListView.jsp)로 전환, Forward
-		RequestDispatcher rd = request.getRequestDispatcher("tmplate.jsp?BODY=cartListView.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("template.jsp?BODY=cartListView.jsp");
 		rd.forward(request, response);
 
 	}
