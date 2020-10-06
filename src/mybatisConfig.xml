@@ -19,6 +19,7 @@
 
 		<mapper resource="mapper/usersMapper.xml" />
 		<mapper resource="mapper/baseballMapper.xml" />
+		<mapper resource="mapper/uploadMapper.xml"/>
 		<!-- 위의 mapper resource를 통해 DB에 접근하고, 해당 쿼리를 실행한다 -->
 	</mappers>
 </configuration>

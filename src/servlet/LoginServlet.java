@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import crud.Crud;
+import model.Cart;
+import model.CartItem;
 import model.Custom_info;
 
 /**
@@ -57,6 +61,19 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("LOGIN", id);
 				result = "YES";
+				// DB에서 장바구니 정보를 검색한다. 시작//
+				List<CartItem> items = crud.getCart(id);
+				if (items != null) {// 장바구니에 정보가 있는 경우
+					Cart cart = new Cart(id);// 장바구니 객체를 생성한다.
+					Iterator it = items.iterator();
+					while (it.hasNext()) {
+						CartItem item = (CartItem) it.next();
+						cart.getCodeList().add(item.getCode());//
+						cart.getNumList().add(item.getNum());
+					}
+					session.setAttribute("CART", cart);// 장바구니 객체를 세션에 저장
+				}
+				// DB에서 장바구니 정보를 검색한다. 끝//
 				// sessionScope.Login으로 LOGIN을 판단하니까
 			} else {// 암호가 일치하지 않는 경우
 				result = "NOPWD";
@@ -66,8 +83,12 @@ public class LoginServlet extends HttpServlet {
 		}
 		// 로그인 결과 뷰(JSP)를 출력한다.
 		// 페이지 전환: redirect, forward
-		response.sendRedirect("template.jsp?BODY=loginResult.jsp?"
-				+ "RESULT=" + result);
+		String param = request.getParameter("CART");
+		if (param == null) {
+			response.sendRedirect("template.jsp?BODY=loginResult.jsp?RESULT=" + result);
+		}else {
+			response.sendRedirect("cartLoginResult.jsp?RESULT="+result);
+		}
 	}
 
 }

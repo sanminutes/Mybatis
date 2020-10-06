@@ -29,13 +29,12 @@
 					<tr>
 						<td>${goods.code }</td>
 						<td>${goods.name }</td>
-						<td>
-							<%-- <fmt:formatNumber groupingUsed="true">${goods.price }
-							</fmt:formatNumber> --%>
+
+						<td><fmt:formatNumber groupingUsed="true">${goods.price }
+							</fmt:formatNumber></td>
 						<td><input type="text" value="${goods.num }" name="NUM"
 							size="3" /></td>
-						<td>
-							<%-- <fmt:formatNumber groupingUsed="true">${goods.price * goods.num }</fmt:formatNumber> --%>
+						<td><fmt:formatNumber groupingUsed="true">${goods.price * goods.num }</fmt:formatNumber>
 						</td>
 						<td><input type="submit" value="수정" name="BTN" /> <input
 							type="submit" value="삭제" name="BTN" /></td>
@@ -48,11 +47,13 @@
 
 		<form action="" method="post">
 			총 합 :
-		<%-- 	<fmt:formatNumber groupingUsed="true"></fmt:formatNumber> --%>
+			<fmt:formatNumber groupingUsed="true">${TOTAL }</fmt:formatNumber>
 			<input type="hidden" name="TOTAL" /><input type="submit"
 				value="결제하기" />
 		</form>
 	</c:if>
+	
+
 
 </body>
 </html>

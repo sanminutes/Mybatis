@@ -109,8 +109,8 @@ td.main {
 						href="bbsList.do">게시글 목록</a><br /> <a
 						href="template.jsp?BODY=penaltyGame.jsp">패널티 게임</a><br /> <a
 						href="template.jsp?BODY=inputItem.jsp">상품 등록</a><br /> <a href="itemList.do">상품
-						목록</a><br /> <a href="cartList.do">장바구니 보기</a><br /> <a href="">답글 및 이미지
-						게시판</a><br /> <a href="">이미지 게시판 목록</a><br />
+						목록</a><br /> <a href="cartList.do">장바구니 보기</a><br /> <a href="writeFormServlet">답글 및 이미지
+						게시판</a><br /> <a href="imageList">이미지 게시판 목록</a><br />
 
 				</div>
 			</td>

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import crud.Crud;
 import model.Cart;
 import model.CartItem;
 
@@ -48,15 +49,18 @@ public class CartListServlet extends HttpServlet {
 			List<Integer> num = cart.getNumList();
 			int total = 0; // 총액을 위한 변수
 			int index = 0;
+			Crud crud = new Crud();
 			while (itr.hasNext()) {
 				String code = (String) itr.next();
-				CartItem item = new CartItem();
+				CartItem item = crud.getItemNamePrice(code); // 번호로 이름, 가격 검색
 				item.setCode(code);
 				item.setNum(num.get(index));
 				list.add(item);
+				total = total + (item.getNum() * item.getPrice()); // 총액 계산
 				index++;
 
 			}
+			request.setAttribute("TOTAL", total);
 			request.setAttribute("CARTLIST", list);
 
 			// 장바구니에 있는 상품코드와 갯수를 저장할 DTO를 생성한다.

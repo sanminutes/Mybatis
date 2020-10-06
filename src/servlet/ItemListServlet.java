@@ -54,7 +54,6 @@ public class ItemListServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("template.jsp?BODY=itemList.jsp");
 		rd.forward(request, response);
 		// 상품목록 뷰로 화면을 전환한다. Forward, Redirect
-
 	}
 
 	/**

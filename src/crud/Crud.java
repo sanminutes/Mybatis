@@ -8,9 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import model.Item;
 import model.Bbs;
+import model.CartItem;
 import model.Custom_info;
+import model.Item;
 
 public class Crud {
 	private final String namespace = "mapper.usersMapper";
@@ -208,5 +209,77 @@ public class Crud {
 			session.close();
 		}
 		return items;
+	}
+
+	public CartItem getItemNamePrice(String code) {
+		SqlSession session = getSession();
+		CartItem item = null;
+		try {
+			String stmt = namespace + ".getItemNamePrice";
+			item = session.selectOne(stmt, code);
+		} finally {
+			session.close();
+		}
+		return item;
+	}
+
+	public Integer getMaxSeqnoCart() {
+		SqlSession session = getSession();
+		Integer max = null;
+		try {
+			String stmt = namespace + ".getMaxSeqnoCart";
+			max = session.selectOne(stmt);
+			if (max == null)
+				max = 0;
+
+		} finally {
+			session.close();
+		}
+		return max;
+	}
+
+	public Integer putCart(CartItem item) {
+		SqlSession session = getSession();
+		Integer result = null;
+		try {
+			String stmt = namespace + ".putCart";
+			result = session.insert(stmt, item);
+			if (result > 0)
+				session.commit();
+			else
+				session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public List<CartItem> getCart(String id) {
+		SqlSession session = getSession();
+		List<CartItem> items = null;
+		try {
+			String stmt = namespace + ".getCart";
+			items = session.selectList(stmt, id);
+		} finally {
+			session.close();
+		}
+		return items;
+	}
+
+	public Integer deleteCart(String id) {
+		SqlSession session = getSession();
+		Integer result = null;
+		try {
+			String stmt = namespace + ".deleteCart";
+			result = session.delete(stmt, id);
+			if (result > 0) {
+				session.commit();
+			} else {
+				session.rollback();
+			}
+		} finally {
+			session.close();
+		}
+		return result;
 	}
 }

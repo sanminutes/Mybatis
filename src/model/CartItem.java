@@ -2,18 +2,18 @@ package model;
 
 //DB연동을 대비해서 변수를 선언함.
 public class CartItem { // 장바구니에 있는 상품 목록을 저장할 객체
-	private String seqno; // 일련번호
+	private Integer seqno; // 일련번호
 	private String name;// 상품 이름
 	private Integer price; // 상품 가격
 	private String code; // 상품코드
 	private Integer num; // 상품갯수
 	private String id; // 계정
 
-	public String getSeqno() {
+	public Integer getSeqno() {
 		return seqno;
 	}
 
-	public void setSeqno(String seqno) {
+	public void setSeqno(Integer seqno) {
 		this.seqno = seqno;
 	}
 
