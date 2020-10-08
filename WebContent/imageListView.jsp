@@ -34,18 +34,34 @@
 				</tr>
 			</c:forEach>
 		</table>
-
-		<c:forEach var="pageNo" begin="1" end="${pageCount }">
+		<c:set var="startPage"
+			value="${currentPage-(currentPage%10 == 0? 10:(currentPage%10)) +1 }" />
+		<c:set var="endPage" value="${startPage + 9 }" />
+		<c:if test="${endPage > pageCount }">
+			<c:set var="endPage" value="${pageCount }" />
+		</c:if>
+		<c:if test="${startPage > 10 }">
+			<a href="javascript:goPage(${startPage -1 })">[이전]</a>
+		</c:if>
+		<c:forEach var="pageNo" begin="${startPage }" end="${endPage }">
 			<c:if test="${currentPage == pageNo }">
 				<font size="5">
 			</c:if>
-			<a href="imageList?Page=${pageNo }">${pageNo }</a>
+			<a href="javascript:goPage(${pageNo })">${pageNo }</a>
 			<c:if test="${currentPage == pageNo }">
 				</font>
 			</c:if>
 		</c:forEach>
+		<c:if test="${endPage < pageCount}">
+			<a href="javascript:goPage(${endPage + 1 })">[다음]</a>
+		</c:if>
 	</c:if>
 	<script type="text/javascript">
+		function goPage(page) {
+			document.move.action = "imageList";
+			document.move.page.value = page;
+			document.move.submit();
+		}
 		function goView(no) {
 			document.move.id.value = no;
 			document.move.action = "imageRead";

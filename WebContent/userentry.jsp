@@ -105,7 +105,7 @@
 				</tr>
 			</table>
 
-			<br /> <input type="submit" value="회원가입" class="btn" /> <input
+			<br /> <input type="submit" value="회원가입" /> <input
 				type="reset" value="취 소" /> <br />
 		</form>
 	</div>

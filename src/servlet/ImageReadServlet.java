@@ -31,8 +31,15 @@ public class ImageReadServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String id = request.getParameter("id");
+		//DB에서 id에 있는 글번호로 검색한다.
+		UploadCrud crud = new UploadCrud();
+		Writing writing = crud.getImage(Integer.parseInt(id));
+		//검색결과를 request에 저장한다.
+		request.setAttribute("writing", writing);
+		//상세글정보 뷰(imageRead.jsp)로 전환한다.
+		RequestDispatcher rd = request.getRequestDispatcher("template.jsp?BODY=imageRead.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

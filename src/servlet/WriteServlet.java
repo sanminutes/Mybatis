@@ -65,10 +65,26 @@ public class WriteServlet extends HttpServlet {
 			} else {// 업로드 성공
 				UploadCrud crud = new UploadCrud();
 				Writing writing = new Writing();
-				writing.setParent_id(0);
-				writing.setOrder_no(0);
+				// 답글 처리 시작
+				String parentId = multipart.getParameter("parentid");
+				String groupId = multipart.getParameter("groupid");
+				String orderNo = multipart.getParameter("orderno");
+				System.out.println(parentId);
+				System.out.println(groupId);
+				System.out.println(orderNo);
+				if (parentId == null || parentId.equals("")) {// 원글인 경우
+					writing.setParent_id(0);
+					writing.setOrder_no(0);
+					writing.setGroup_id(crud.getMaxId() + 1);
+				} else {// 답글인 경우
+					writing.setParent_id(Integer.parseInt(parentId));
+					writing.setGroup_id(Integer.parseInt(groupId));
+					writing.setOrder_no(Integer.parseInt(orderNo));
+					// DB에서 순서번호를 변경한다.
+					crud.updateOrderNo(writing);
+				}
+				// 답글 처리 끝
 				writing.setWriting_id(crud.getMaxId() + 1);
-				writing.setGroup_id(crud.getMaxId() + 1);
 				writing.setTitle(multipart.getParameter("title"));
 				writing.setWriter_name(multipart.getParameter("writer_name"));
 				writing.setEmail(multipart.getParameter("email"));

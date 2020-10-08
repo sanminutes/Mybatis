@@ -8,6 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<script type="text/javascript">
+		function checkId() {
+			if (document.registerPlayer.ID.value == '') {
+				alert("선수번호를 입력하세요.");
+				return;
+			}
+			window.open("codeCheck?CODE=" + document.registerplayer.ID.value,
+					"_blank", "width=350, height=250")
+		}
+	</script>
 	<h2 align="center">야구 선수 등록</h2>
 	<form action="putBaseballPlayer" method="post"
 		onSubmit="return check(this)" name="registerPlayer">
@@ -16,10 +26,11 @@
 			<input type="hidden" name="CHECKED" /> 선수번호 : <input type="text"
 				name="ID" /> <input type="button" value="중복검사" onClick="checkId()" />
 			<br /> 팀번호 및 이름 : <select name="TEAM_ID">
-			<option>-선택하세요-</option>
-					<c:forEach var="team" items="${TEAM }">
-						<option value="${team.id }">${team.name }</option>
-					</c:forEach></select> 선수이름 : <input type="text" name="NAME" /><br /> 포지션 : <select
+				<option>-선택하세요-</option>
+				<c:forEach var="team" items="${TEAM }">
+					<option value="${team.id }">${team.name }</option>
+				</c:forEach>
+			</select> 선수이름 : <input type="text" name="NAME" /><br /> 포지션 : <select
 				name="POS"><option>-선택하세요-</option>
 				<option>투수</option>
 				<option>포수</option>

@@ -39,9 +39,18 @@ public class ImageListServlet extends HttpServlet {
 		UploadCrud crud = new UploadCrud();
 		int count = crud.getTotalCnt();// 전체 글 갯수 검색
 		int totalPageCount = 0; // 페이지 갯수
-		String pageNum = request.getParameter("Page"); // 페이지 번호를 누른경우
+		String pageNum = request.getParameter("page"); // 페이지 번호를 누른경우
 		if (pageNum == null)
 			pageNum = "1"; // 페이지번호가 없는 경우는 1
+		/// 수정된 글이 있는 페이지로 이동 시작
+		String seqno = request.getParameter("seqno");
+		if (seqno != null) {// seqno 파라미터가 존재하는 경우
+			int rownum = crud.selectRownum(Integer.parseInt(seqno));
+			int page = rownum / 5; // 검색된 rownum으로 페이지를 계산
+			if (rownum % 5 != 0) page++;
+			pageNum = String.valueOf(page);
+		}
+		/// 수정된 글이 있는 페이지로 이동 끝
 		int startRow = 0;
 		int endRow = 0; // 이미지 글 검색 범위
 		int currentPage = Integer.parseInt(pageNum); // 정수로 변환

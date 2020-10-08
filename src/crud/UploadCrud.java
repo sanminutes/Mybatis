@@ -105,4 +105,68 @@ public class UploadCrud {
 		}
 		return writing;
 	}
+
+	public Integer deleteImage(Integer no) {
+		SqlSession session = getSession();
+		String stmt = namespace + ".deleteImage";
+		Integer result = null;
+		try {
+			result = session.delete(stmt, no);
+			if (result > 0)
+				session.commit();
+			else
+				session.rollback();
+		} finally {
+			session.close();
+
+		}
+		return result;
+	}
+
+	public Integer updateImage(Writing w) {
+		SqlSession session = getSession();
+		Integer result = null;
+		String stmt = namespace + ".updateImage";
+		try {
+			result = session.update(stmt, w);
+			if (result > 0)
+				session.commit();
+			else
+				session.rollback();
+
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public Integer selectRownum(Integer id) {
+		SqlSession session = getSession();
+		Integer result = null;
+		String stmt = namespace + ".selectRownum";
+		try {
+			result = session.selectOne(stmt, id);
+
+		} finally {
+			session.close();
+		}
+		return result;
+	}
+
+	public Integer updateOrderNo(Writing w) {
+		SqlSession session = getSession();
+		Integer result = null;
+		String stmt = namespace + ".updateOrderNo";
+		try {
+			result = session.update(stmt, w);
+			if (result > 0)
+				session.commit();
+			else
+				session.rollback();
+		} finally {
+			session.close();
+		}
+		return result;
+
+	}
 }

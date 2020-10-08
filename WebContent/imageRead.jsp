@@ -22,7 +22,7 @@
 				<td>${writing.writer_name }</td>
 			</tr>
 			<tr>
-				<td cospan="2"><img alt="" src="upload/${writing.image_name }"
+				<td colspan="2"><img alt="" src="upload/${writing.image_name }"
 					width="350" height="350"></td>
 			</tr>
 			<tr>
@@ -30,12 +30,33 @@
 				<td>${writing.content }</td>
 			</tr>
 			<tr>
-				<td colspan="2"><a href="">[답글]</a><a href="">[수정]</a> <a
-					href="">[삭제]</a><a href="">[목록]</a></td>
+				<td colspan="2"><a href="javascript:goReply()">[답글]</a><a
+					href="javascript:goModify()">[수정]</a> <a
+					href="javascript:goDelete()">[삭제]</a><a href="imageList">[목록]</a></td>
 			</tr>
 
 
 		</table>
 	</c:if>
+	<form name="move">
+		<input type="hidden" name="id" value="${writing.writing_id }" /> <input
+			type="hidden" name="parentid" value="${writing.writing_id }" /> <input
+			type="hidden" name="groupid" value="${writing.group_id }" />
+	</form>
+	<script type="text/javascript">
+		function goReply() {
+			document.move.action = "writeFormServlet";
+			document.move.submit();
+		}
+		function goDelete() {
+			document.move.action = "imageDelete";
+			document.move.submit();
+		}
+		function goModify() {
+			document.move.action = "imageUpdate";
+			document.move.submit();
+		}
+	</script>
+
 </body>
 </html>

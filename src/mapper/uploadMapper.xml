@@ -31,4 +31,29 @@
 		resultType="model.Writing">
 		select * from image_writing where writing_id = #{id}
 	</select>
+	<delete id="deleteImage" parameterType="Integer">
+		delete from image_writing
+		where writing_id=#{id}
+	</delete>
+	<update id="updateImage" parameterType="model.Writing">
+		update image_writing set
+		title=#{title}, writer_name=#{writer_name},
+		email=#{email},
+		content=#{content}, image_name=#{image_name}
+		where
+		writing_id=#{writing_id}
+	</update>
+	<select id="selectRownum" parameterType="Integer"
+		resultType="Integer">
+		select rn
+		from (select a.*, rownum rn from (select
+		writing_id, group_id, order_no
+		from image_writing order by group_id
+		desc, order_no asc) a)
+		where writing_id = #{writing_id}
+	</select>
+	<update id="updateOrderNo" parameterType="model.Writing">
+		update image_writing set order_no = order_no + 1
+		where group_id = #{group_id} and order_no >= #{order_no}
+	</update>
 </mapper>

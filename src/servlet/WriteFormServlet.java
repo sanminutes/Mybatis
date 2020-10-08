@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import crud.UploadCrud;
+import model.Writing;
+
 /**
  * Servlet implementation class WriteFormServlet
  */
@@ -30,7 +33,19 @@ public class WriteFormServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("template.jsp?BODY=writeForm.jsp");
+		String parentId = request.getParameter("parentid");
+		String groupId = request.getParameter("groupid");
+		if (parentId != null) {// 답글인 경우
+			String title = "";// 답글의 제목을 위한 변수
+			UploadCrud crud = new UploadCrud();
+			Writing writing = crud.getImage(Integer.parseInt(parentId));// 원글검색
+			if (writing != null) { 
+				title = "RE]" + writing.getTitle();
+				request.setAttribute("writing", writing);
+				request.setAttribute("title", title);
+			}
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("template.jsp?BODY=writerForm.jsp");
 		rd.forward(request, response);
 	}
 

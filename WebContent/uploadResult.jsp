@@ -11,6 +11,7 @@
 	<c:if test="${param.R == 'OK' }">
 		<script type="text/javascript">
 			alert("새로운 이미지가 등록되었습니다.");
+			location.href="imageList";
 		</script>
 	</c:if>
 	<c:if test="${param.R != 'OK'}">
