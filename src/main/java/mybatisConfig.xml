@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org./dtd/mybatis-3-config.dtd">
+<configuration>
+	<environments default="fromAtoZ">
+		<environment id="fromAtoZ">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="username" value="kosea" />
+				<property name="password" value="kosea2019a" />
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@localhost:1521:orcl" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+
+		<mapper resource="mapper/usersMapper.xml" />
+		<!-- 위의 mapper resource를 통해 DB에 접근하고, 해당 쿼리를 실행한다 -->
+	</mappers>
+</configuration>
