@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<bean id="apple" class="sample3.Apple">
+		<property name="name" value="사과"></property>
+	</bean>
+	<bean id="computer" class="sample3.Computer">
+		<property name="name" value="컴퓨터"></property>
+	</bean>
+	<bean id="danaka" class="sample3.Danaka">
+		<property name="item" ref="computer"></property>
+		<property name="name" value="다나까"></property>
+	</bean>
+</beans>
