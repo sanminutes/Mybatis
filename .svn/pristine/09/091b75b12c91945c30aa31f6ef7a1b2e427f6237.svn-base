@@ -1,0 +1,4 @@
+error.input.user=입력정보에 문제가 있습니다.
+error.required.userId=사용자ID는 반드시 입력해야 합니다.
+error.required.password=암호는 반드시 입력해야 합니다.
+error.login.user=ID와 암호를 확인하세요.
