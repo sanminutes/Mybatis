@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org./dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.usersMapper">
+	<select id="getMaxSeqno" resultType="Integer">
+		select max(seqno) from bbs
+	</select>
+	<insert id="putBBS" parameterType="model.Bbs">
+		insert into bbs
+		values(#{seqno}, #{title}, #{content}, #{id}, #{bbs_date})
+	</insert>
+	<select id="selectMember" parameterType="String"
+		resultType="model.Custom_info"><!-- parameterType="model.Custom_info" DTO를쓴다 -->
+		select * from custom_info where id= #{id}<!-- select * from custom_info 
+			where id= #{id} and password = #{pwd} 중복으로 받을땐 -->
+	</select>
+
+	<select id="getBBSRead" parameterType="Integer"
+		resultType="model.Bbs">
+		select * from bbs where seqno = #{seqno}
+	</select>
+	<select id="getBBSCount" resultType="Integer">
+		select count(*) from bbs
+	</select>
+	<select id="getBBS" resultType="model.Bbs"
+		parameterType="Integer">
+		select seqno, title, id, bbs_date from
+		(select rownum rn, seqno, title,
+		id, bbs_date
+		from (select * from bbs order by seqno desc))
+		where (rn >
+		((#{no}-1)*5)) and (rn <![CDATA[<]]>
+		((#{no}-1)*5)+6)
+	</select>
+	<insert id="putMember" parameterType="model.Custom_info">
+		insert into custom_info
+		values(#{id}, #{password}, #{name}, #{addr}, #{email}, #{gender},
+		#{job})
+	</insert>
+	<select id="getItemID" parameterType="String"
+		resultType="Integer">
+		select count(*) from selling_item where code = #{code}
+	</select>
+	<select id="getItem" parameterType="String"
+		resultType="model.Item">
+		select * from selling_item where code = #{code}
+	</select>
+	<insert id="putItem" parameterType="model.Item">
+		insert into selling_item
+		values(#{code}, #{name}, #{price}, #{info}, #{origin})
+	</insert>
+	<select id="getItemCount" resultType="Integer">
+		select count(*) from
+		selling_item
+	</select>
+	<select id="getItems" resultType="model.Item"
+		parameterType="Integer">
+		select code, name, price, info, origin from
+		(select rownum rn, code,
+		name, price, info, origin from selling_item)
+		where rn > (#{pagenum} -
+		1) * 5 and rn <![CDATA[<]]>
+		(((#{pagenum} - 1) * 5) + 6)
+	</select>
+	<select id="getItemNamePrice" parameterType="String"
+		resultType="model.CartItem">
+		select name, price from selling_item where code = #{code}
+	</select>
+	<select id="getMaxSeqnoCart" resultType="Integer">
+		select max(seqno) from
+		my_cart
+	</select>
+	<insert id="putCart" parameterType="model.CartItem">
+		insert into my_cart
+		values(#{seqno}, #{code}, #{num}, #{id}, #{sizee})
+	</insert>
+	<select id="getCart" parameterType="String"
+		resultType="model.CartItem">
+		select cart.code code, cart.num num, item.price price,
+		item.Writer_name name, cart.sizee, item.charge_price
+		from my_cart cart, brand_item item
+		where cart.code = item.writing_id and cart.id = #{id}
+	</select>
+	<select id="deleteCart" parameterType="model.CartItem">
+		delete from my_cart where
+		id = #{id} and code = #{code} and sizee = #{sizee}
+	</select>
+	<select id="getPassword" resultType="String"
+		parameterType="String">
+		select password from custom_info where id = #{id}
+	</select>
+	<select id="getIdCnt" resultType="Integer"
+		parameterType="String">
+		select count(*) as cnt from custom_info where id = #{id}
+	</select>
+	<update id="updateCart" parameterType="model.CartItem">
+		update my_cart set
+		num=#{num}
+		where code=#{code} and id=#{id} and sizee=#{sizee}
+	</update>
+</mapper>

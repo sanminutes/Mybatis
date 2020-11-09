@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+
+#drop_the_text input {
+	background-image: url("../img/search_a.jpg");
+	background-position: left;
+	border: 1px solid #BDBDBD;
+	width: 100%;
+	height: 40px;
+	box-sizing: border-box;
+	outline: none;
+	border-radius: 3px;
+}
+
+input.button-add {
+	background-image: url("../img/search_b.png"); /* 16px x 16px */
+	background-color: transparent; /* make the button transparent */
+	background-repeat: no-repeat;
+	/* make the background image appear only once */
+	background-position: left; /* equivalent to 'top left' */
+	border: 1px solid #810000;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	outline: none;
+	cursor: pointer;
+	/* make the cursor like hovering over an <a> element */
+	height: 40px; /* make this the size of your image */
+	padding-left: 40px; /* make text start to the right of the image */
+	vertical-align: middle; /* align the text vertically centered */
+	margin-left: -6px;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.uploadMapper">
+	<select id="getMaxId" resultType="Integer">
+		select max(writing_id) from
+		brand_item
+	</select>
+	<insert id="putImageWriting" parameterType="model.ItemWriting">
+		insert into
+		brand_item
+		values(#{writing_id},#{title},#{writer_name},#{price},#{charge_price},#{delivery},#{image1},#{image2},#{country},#{comments},#{options1},#{options2},#{category})
+	</insert>
+	<select id="getImageList" parameterType="model.Condition"
+		resultType="model.ItemWriting">
+		select writing_id, title, writer_name, price, charge_price, delivery, image1, image2, country, options1, options2, comments, category
+		from (select a.*, rownum rn from
+		(select * from brand_item where category = #{c_num}
+		order by writing_id) a)
+		where rn between #{startRow}
+		and #{endRow}
+	</select>
+	<select id="getTotalCnt" parameterType="Integer" resultType="Integer">
+		select count(*) from
+		brand_item where category = #{category}
+	</select>
+	<select id="getImage" parameterType="Integer"
+		resultType="model.ItemWriting">
+		select * from brand_item where writing_id = #{id}
+	</select>
+	<delete id="deleteImage" parameterType="Integer">
+		delete from image_writing
+		where writing_id=#{id}
+	</delete>
+	<update id="updateImage" parameterType="model.Writing">
+		update image_writing set
+		title=#{title}, writer_name=#{writer_name},
+		email=#{email},
+		content=#{content}, image_name=#{image_name}
+		where
+		writing_id=#{writing_id}
+	</update>
+	<select id="selectRownum" parameterType="Integer"
+		resultType="Integer">
+		select rn
+		from (select a.*, rownum rn from (select writing_id
+		from BRAND_ITEM order by WRITING_ID desc) a)
+		where writing_id = #{writing_id}
+	</select>
+	<update id="updateOrderNo" parameterType="model.Writing">
+		update image_writing
+		set order_no = order_no + 1
+		where group_id = #{group_id} and order_no
+		>= #{order_no}
+	</update>
+	<select id="getCategory" resultType="model.Category">
+	select c_num, c_name from category
+	</select>
+</mapper>
