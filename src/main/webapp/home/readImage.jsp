@@ -16,6 +16,33 @@
 	height: 1px;
 	background-color: #D5D5D5;
 }
+
+#cartbutton {
+	font-size: 20px;
+	height: 50px;
+	width: 267px;
+	background-color: #F15F5F;
+	border: 1px solid #D5D5D5;
+	color: white;
+}
+
+#buybutton {
+	font-size: 20px;
+	height: 50px;
+	width: 267px;
+	background-color: white;
+	border: 1px solid #D5D5D5;
+}
+
+#sh {
+	border-radius: 10px 10px 10px 10px;
+	border: 1px solid #B1B1B1;
+	width: 80px;
+	height: 30px;
+	background-color: #B1B1B1;
+	font-size: 14px;
+	color: white;
+}
 </Style>
 </head>
 <body>
@@ -23,16 +50,16 @@
 존재하지 않는 글입니다.
 </c:if>
 	<c:if test="${!empty writing }">
-		<table width="90%" align="center"
+		<br />
+		<table width="1100px" align="center"
 			style="font-family: 'Nanum Gothic', sans-serif;">
 			<tr>
 				<td colspan="2" width="500" align="center"
 					style="table-layout: fixed;"><img alt=""
-					src="../img/${writing.writing_id }.jpeg"
-					width="500" height="500"></td>
+					src="../img/${writing.writing_id }.jpeg" width="500" height="500"></td>
 				<td colspan="2" width="500"><div>
 						<div style="float: left">
-							<a href="#"><font color="black">${writing.title }</font></a>
+							<a href="../write/titlelist.html?title=${writing.title }"><font color="black">${writing.title }</font></a>
 						</div>
 
 						<div align="right">
@@ -54,30 +81,39 @@
 							${writing.country }</b></font>
 					<hr class="itemhr"> <font size="4"><b>본 상품은
 							${writing.delivery }배송 가능합니다.</b></font>
+
+
 					<hr class="itemhr"> <font size="4"><b>옵션선택</b></font><br /> <br />
-					<select id="itemselect1" name="itemselect1"
-					style="width: 500px; height: 40px; font-size: 20px;">
-						<c:forTokens var="options1" items="${writing.options1 }"
-							delims=",">
-							<option value="${fn:trim(options1)}"><c:out
-									value="${fn:trim(options1)}" /></option>
-						</c:forTokens>
-				</select><br /> <select id="itemselect2" name="itemselect2"
-					style="width: 500px; height: 40px; font-size: 20px;">
-						<c:forTokens var="options2" items="${writing.options2 }"
-							delims=",">
-							<option value="${fn:trim(options2)}"><c:out
-									value="${fn:trim(options2)}" /></option>
-						</c:forTokens>
-				</select><br /> <a href="#" onClick="javascript:button1_click(); "><input
-						type="button" value="장바구니"></a> <input type="button"
-					value="구매하기"></td>
+					<div style="line-height: 10px">
+						<select id="itemselect1" name="itemselect1"
+							style="width: 540px; height: 40px; font-size: 16px;">
+							<c:forTokens var="options1" items="${writing.options1 }"
+								delims=",">
+								<option value="${fn:trim(options1)}"><c:out
+										value="${fn:trim(options1)}" /></option>
+							</c:forTokens>
+						</select><br /> <br /> <select id="itemselect2" name="itemselect2"
+							style="width: 540px; height: 40px; font-size: 16px;">
+							<c:forTokens var="options2" items="${writing.options2 }"
+								delims=",">
+								<option value="${fn:trim(options2)}"><c:out
+										value="${fn:trim(options2)}" /></option>
+							</c:forTokens>
+						</select><br /> <br /> <a href="#" onClick="javascript:button1_click(); "><input
+							type="button" value="장바구니" id="cartbutton"></a> <input
+							type="button" value="구매하기" id="buybutton">
+					</div></td>
+			</tr>
+			<tr height="20px">
+				<td></td>
 			</tr>
 
+
 			<tr>
-				<td colspan="4" height="40"><input type="button" value="상세설명">
-					<input type="button" value="상품평"> <input type="button"
-					value="상품문의"> <input type="button" value="교환/반품"></td>
+				<td colspan="4" height="40" style="background-color: #D5D5D5;">&nbsp;&nbsp;<input
+					type="button" value="상세설명" id="sh"> <input type="button"
+					value="상품평" id="sh"> <input type="button" value="상품문의"
+					id="sh"> <input type="button" value="교환/반품" id="sh"></td>
 			</tr>
 			<tr>
 				<td colspan="4" width="150"></td>

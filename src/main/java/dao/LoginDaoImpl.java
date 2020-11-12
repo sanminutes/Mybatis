@@ -27,4 +27,8 @@ public class LoginDaoImpl implements LoginDao {
 		session.insert("mapper.usersMapper.putMember", guest);
 	}
 
+	public Integer getLevel(String id) {
+	return session.selectOne("mapper.usersMapper.getLevel", id);
+	}
+
 }

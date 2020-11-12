@@ -46,15 +46,16 @@ public class LoginController {
 			 * List<ObjectError> list = br.getAllErrors(); for (ObjectError e : list) {
 			 * System.out.println(e); }
 			 */
-
 			mav.addObject("BODY", "login.jsp");
 			return mav;
 		}
 		String password = loginCatalog.getPwd(guest.getId());
+	
 		if (password == null || !guest.getPassword().equals(password)) {
-
 		} else {
 			session.setAttribute("loginUser", guest.getId());
+			int level = loginCatalog.getLevel(guest.getId());	
+			session.setAttribute("loginLevel", level);
 			List<CartItem> cartList = cart.getCart(guest.getId());
 			if (cartList != null) {
 				Iterator it = cartList.iterator();
@@ -63,6 +64,7 @@ public class LoginController {
 					CartItem ci = (CartItem) it.next();
 					this.cart.setCodeList(i, ci.getCode());
 					this.cart.setNumList(i, ci.getNum());
+					this.cart.setSizeList(i, ci.getSizee());
 				}
 				session.setAttribute("CART", this.cart);
 			}

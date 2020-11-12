@@ -37,6 +37,7 @@ public class Cart {
 	}
 
 	public void addCart(String code, String size, int num, String id) {
+		this.id = id;
 		for (int i = 0; i < codeList.size(); i++) {
 			if (codeList.get(i).equals(code) && sizeList.get(i).equals(size)) {
 				numList.set(i, numList.get(i) + num);
@@ -111,6 +112,10 @@ public class Cart {
 	public void setNumList(int index, Integer num) {
 		this.numList.add(index, num);
 	}
+	
+	public void setSizeList(int index, String size) {
+		this.sizeList.add(index, size);
+	}
 
 	public List<CartItem> getCart(String id) {
 		return this.cartDao.selectCart(id);
@@ -128,6 +133,10 @@ public class Cart {
 		return numList;
 	}
 
+	public LinkedList<String> getSizeList() {
+		return sizeList;
+	}
+	
 	public String getId() {
 		return id;
 	}

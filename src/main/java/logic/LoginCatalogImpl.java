@@ -24,8 +24,13 @@ public class LoginCatalogImpl implements LoginCatalog {
 	}
 
 	public void putUser(Custom_info guest) {
+
 		this.loginDao.entryUser(guest);
 
+	}
+
+	public Integer getLevel(String id) {
+		return loginDao.getLevel(id);
 	}
 
 }

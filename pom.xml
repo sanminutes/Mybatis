@@ -174,5 +174,11 @@
 			<artifactId>aspectjrt</artifactId>
 			<version>1.5.4</version>
 		</dependency>
+		<!-- java mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
 	</dependencies>
 </project>

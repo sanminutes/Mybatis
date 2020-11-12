@@ -18,8 +18,12 @@
 	text-align: right;
 }
 
-td {
+.cart td {
 	text-align: center;
+}
+
+#carttable {
+	background-color: black;
 }
 </style>
 </head>
@@ -31,13 +35,13 @@ td {
 	<c:if test="${!empty CART_LIST }">
 		<table class="cart" border="1" align="center" width="90%">
 			<tr>
-				<th width="80">상품번호</th>
-				<th width="100">상품이름</th>
-				<th width="100">상품가격</th>
-				<th width="100">사이즈</th>
-				<th width="100">상품갯수</th>
-				<th width="80">합 계</th>
-				<th width="100">수정/삭제</th>
+				<th width="80" id="carttable"><font color="white">상품번호</font></th>
+				<th width="100" id="carttable"><font color="white">상품이름</font></th>
+				<th width="100" id="carttable"><font color="white">상품가격</font></th>
+				<th width="100" id="carttable"><font color="white">사이즈</font></th>
+				<th width="100" id="carttable"><font color="white">상품갯수</font></th>
+				<th width="80" id="carttable"><font color="white">합 계</font></th>
+				<th width="100" id="carttable"><font color="white">수정/삭제</font></th>
 			</tr>
 
 			<c:forEach var="goods" items="${CART_LIST }">

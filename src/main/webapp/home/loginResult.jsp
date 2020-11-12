@@ -12,8 +12,9 @@
 		<c:when test="${sessionScope.loginUser != null}">
 			<script type="text/javascript">
 				alert("로그인 되었습니다. 환영합니다. [${sessionScope.loginUser }]님");
+				location.href = "../home/index.jsp";
 				self.close();
-				location.href="../home/index.html";
+				opener.location.reload();
 			</script>
 
 

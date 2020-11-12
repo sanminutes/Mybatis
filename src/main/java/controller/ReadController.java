@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import dao.WriteDao;
 import logic.ItemCatalog;
 import logic.WriteCatalog;
+import model.AuctionItem;
 import model.Bbs;
 import model.Item;
 import model.ItemWriting;
@@ -30,6 +31,22 @@ public class ReadController {
 		ItemWriting itemwriting = writeDao.getImageWriting(id);
 		mav.addObject("writing", itemwriting);
 		mav.addObject("BODY", "readImage.jsp");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/read/readAuction.html")
+	public ModelAndView readAuction(Integer id) {
+		ModelAndView mav = new ModelAndView("home/index");
+		AuctionItem auctionItem= writeDao.getAuctionWriting(id);
+		Integer cnt = writeDao.selectCnt();
+		Integer max = writeDao.selectMax();
+		if(max==null) {
+			max=0;
+		}
+		mav.addObject("cnt", cnt);
+		mav.addObject("max", max);
+		mav.addObject("auction", auctionItem);
+		mav.addObject("BODY", "readAuction.jsp");
 		return mav;
 	}
 
@@ -71,6 +88,8 @@ public class ReadController {
 		int pageCount = totalCount / 5;
 		if (totalCount % 5 > 0)
 			pageCount++;
+		List<Bbs> bbs = writeCatalog.getBbsDetail();
+		mav.addObject("CONTENT", bbs);
 		mav.addObject("pageCount", pageCount);
 		mav.addObject("RESULT", "OK");
 		mav.addObject("BODY", "bbsListView.jsp");
@@ -80,9 +99,21 @@ public class ReadController {
 	@RequestMapping(value = "/read/readDetail.html")
 	public ModelAndView detail(Integer SEQNO) {
 		ModelAndView mav = new ModelAndView("home/index");
-		Bbs bbs = writeCatalog.getBbsDetail(SEQNO);
-		mav.addObject("BBS", bbs);
-		mav.addObject("BODY", "bbsRead.jsp");
+		/*
+		 * Bbs bbs = writeCatalog.getBbsDetail(); mav.addObject("BBS", bbs);
+		 * mav.addObject("BODY", "bbsRead.jsp");
+		 */
 		return mav;
 	}
+	
+	@RequestMapping(value = "/read/readsearch.html")
+	public ModelAndView search(String keyword) {
+		ModelAndView mav = new ModelAndView("home/index");
+		List<ItemWriting> searchlist = writeDao.getsearch(keyword);
+		mav.addObject("SEARCH", searchlist);
+		mav.addObject("keyword", keyword);
+		mav.addObject("BODY", "search.jsp");
+		return mav;
+	}
+	
 }

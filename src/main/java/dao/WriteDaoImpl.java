@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import model.AuctionItem;
 import model.Bbs;
 import model.Category;
 import model.Condition;
@@ -38,6 +39,10 @@ public class WriteDaoImpl implements WriteDao {
 		return session.selectOne("mapper.uploadMapper.getImage", id);
 	}
 
+	public AuctionItem getAuctionWriting(Integer id) {
+		return session.selectOne("mapper.uploadMapper.getatList", id);
+	}
+	
 	public Integer getMaxWritingId() {
 		Integer max = session.selectOne("mapper.uploadMapper.getMaxId");
 		if (max == null) {
@@ -47,7 +52,6 @@ public class WriteDaoImpl implements WriteDao {
 	}
 
 	public List<ItemWriting> getItemWriting(Condition pageNo) {
-		System.out.println("pageNo : " +pageNo.getC_num());
 		return session.selectList("mapper.uploadMapper.getImageList", pageNo);
 	}
 
@@ -85,5 +89,46 @@ public class WriteDaoImpl implements WriteDao {
 		return session.selectList("mapper.uploadMapper.getCategory");
 		
 	}
+
+	public List<ItemWriting> gettitle(String title) {
+		return session.selectList("mapper.uploadMapper.gettitle", title);
+	}
+
+	public List<ItemWriting> getsearch(String keyword) {
+		return session.selectList("mapper.uploadMapper.getsearch", keyword);
+	}
+
+	public Integer getMaxatWritingId() {
+		Integer max = session.selectOne("mapper.uploadMapper.getatMaxId");
+		if (max == null) {
+			max = 0;
+		}
+		return max;
+	}
+
+	public void insertatWriting(AuctionItem auctionItem) {
+		if(auctionItem.getA_high_p()==null) {
+			auctionItem.setA_high_p(0);
+		}
+		session.insert("mapper.uploadMapper.putatImageWriting", auctionItem);
+		
+	}
+
+	public List<AuctionItem> getAuctionItem() {
+		return session.selectList("mapper.uploadMapper.getauction");
+	}
+
+	public List<AuctionItem> getheaven(AuctionItem auctionItem) {
+		return session.selectList("mapper.uploadMapper.getheaven", auctionItem);
+	}
+
+	public Integer selectCnt() {
+		return session.selectOne("mapper.uploadMapper.selectCnt");
+	}
+
+	public Integer selectMax() {
+		return session.selectOne("mapper.uploadMapper.selectMax");
+	}
+
 
 }

@@ -16,30 +16,30 @@
 </style>
 </head>
 <body>
-	<a href="../write/writeForm.html"><font color="black">상품추가(테스트)</font></a>
+	<c:if test="${loginLevel==2||loginLevel==3 }">
+		<a href="../write/writeForm.html"><font color="black">상품추가(테스트)</font></a>
+	</c:if>
 	<h2 style="margin-top: -10px; margin-left: 45px;">
 		<font size="4">상품정보</font>
 	</h2>
 	<c:if test="${empty LIST }">
 		<div align="center">등록된 게시글이 존재하지 않습니다.</div>
 	</c:if>
-	<c:if test="${ ! empty LIST }">	
+	<c:if test="${ ! empty LIST }">
 		<table class="item" style="margin-top: -20px;">
 			<tr>
 				<%!int cnt = 0;%>
 				<c:forEach var="writing" items="${LIST }">
-
 					<td width="40"></td>
 					<td width="150" height="150"><img alt=""
-						src="../img/${writing.writing_id }.jpeg"
-						width="200" height="200" /><br /> <a
-						href="javascript:goView(${writing.writing_id })"
+						src="../img/${writing.writing_id }.jpeg" width="200" height="200" /><br />
+						<a href="javascript:goView(${writing.writing_id })"
 						style="word-break: break-all;"><font color="black" size="4">${writing.writer_name }</font></a><br />
 						<b><font size="5"><fmt:formatNumber
 									value="${writing.price }" />원</font> </b><br /> <font size="3"><c:if
 								test="${writing.charge_price != 0}">배송비 <fmt:formatNumber
-									value="${writing.charge_price }"/>원</c:if>
-							<c:if test="${writing.charge_price == 0}">무료배송</c:if></font><br /></td>
+									value="${writing.charge_price }" />원</c:if> <c:if
+								test="${writing.charge_price == 0}">무료배송</c:if></font><br /></td>
 					<%
 						cnt++;
 					%>
@@ -75,8 +75,8 @@
 				<c:if test="${currentPage == pageNo }">
 
 				</c:if>
-				<a href="javascript:goPage(${pageNo },${category })"><font color="black"
-					size="4">${pageNo }</font></a>
+				<a href="javascript:goPage(${pageNo },${category })"><font
+					color="black" size="4">${pageNo }</font></a>
 				<c:if test="${currentPage == pageNo }">
 
 				</c:if>
@@ -87,7 +87,7 @@
 	</c:if>
 	</div>
 	<script type="text/javascript">
-		function goPage(page,category) {
+		function goPage(page, category) {
 			document.move.action = "../write/writeList.html";
 			document.move.PAGE_NUM.value = page;
 			document.move.category.value = category;
@@ -100,8 +100,9 @@
 		}
 	</script>
 	<form name="move" method="post">
-		<input type="hidden" name="id" /><input type="hidden" name="category" value="${category }" /> <input type="hidden"
-			name="PAGE_NUM" value="${currentPage }" />
+		<input type="hidden" name="id" /><input type="hidden" name="category"
+			value="${category }" /> <input type="hidden" name="PAGE_NUM"
+			value="${currentPage }" />
 	</form>
 </body>
 </html>

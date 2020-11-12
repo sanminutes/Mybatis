@@ -52,20 +52,25 @@ a:hover {
 </script>
 </head>
 <body>
-	<table width="100%" height="70">
+
+	<table width="1500" height="70">
 		<tr>
 			<td width="14%"><a href="../home/index.html"><img
 					src="../img/logo.jpg" height="70px"></a></td>
+			<form action="../read/readsearch.html" method="get">
 			<td width="52%">
+
 				<div id="drop_the_text">
-					<input type="text" placeholder="키워드 검색" id="write_list">
+					<input type="text" placeholder="키워드 검색" id="write_list" name="keyword">
 				</div>
 			</td>
-			<td width="4%" height="60"><input type="button" class="button-add" /></td>
-
-			<td width="5%" height="60" align="center"><a href="../read/read.html"><img
-					src="../img/sub.png" width="25px" height="25px" alt="" title="공지사항"><br />
-					<font color="black" size="2">공지사항</font></a></td>
+			<td width="4%" height="60"><input type="submit"
+				class="button-add" value="" /></td>
+			</form>
+			<td width="5%" height="60" align="center"><a
+				href="../read/read.html"><img src="../img/sub.png" width="25px"
+					height="25px" alt="" title="공지사항"><br /> <font color="black"
+					size="2">공지사항</font></a></td>
 			<td width="5%" align="center"><a href="../cart/show.html"><img
 					src="../img/cart.png" width="25px" height="25px" alt=""
 					title="장바구니"><br /> <font color="black" size="2">장바구니</font></a></td>
@@ -92,9 +97,9 @@ a:hover {
 						<%-- 					<jsp:include page="${LOGIN }" /> --%>
 						<%-- 				</c:when> --%>
 						<c:otherwise>
-							<a href="../logout/index.html"> <img src="../img/user-logout.png" width="25px"
-								height="25px" alt="" title="내정보"><br /> <font
-								color="black" size="2">로그아웃</font></a>
+							<a href="../logout/index.html"> <img
+								src="../img/user-logout.png" width="25px" height="25px" alt=""
+								title="내정보"><br /> <font color="black" size="2">로그아웃</font></a>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -106,16 +111,16 @@ a:hover {
 	<div>
 		<ul class="bxslider">
 			<li><a href="#"><img src="../img/name1.gif" alt=""
-					title="이미지1" width="100%" height="200px"></a></li>
+					title="이미지1" width="1500" height="200px"></a></li>
 			<li><a href="#"><img src="../img/name2.jpg" alt=""
-					title="이미지2" width="100%" height="200px"></a></li>
+					title="이미지2" width="1500" height="200px"></a></li>
 			<li><a href="#"><img src="../img/name3.jpg" alt=""
-					title="이미지3" width="100%" height="200px"></a></li>
+					title="이미지3" width="1500" height="200px"></a></li>
 			<li><a href="#"><img src="../img/name4.gif" alt=""
-					title="이미지4" width="100%" height="200px"></a></li>
+					title="이미지4" width="1500" height="200px"></a></li>
 		</ul>
 	</div>
-	<table width="100%"
+	<table width="1500"
 		style="border-collapse: collapse; margin-top: -50px;">
 		<tr>
 			<td width="200" height="60" style="background-color: #DB0000;"
@@ -125,7 +130,8 @@ a:hover {
 							<jsp:include page="${BODY }" />
 						</c:when>
 						<c:otherwise>
-				지금 제일 잘 나가는 상품
+				<a href="../write/atwriteform.html"><font color="black">옥션 경매 출품</font></a>
+				<a href="../write/atwriteList.html"><font color="black">옥션 경매 물품</font></a>
 			</c:otherwise>
 					</c:choose></font></td>
 		</tr>

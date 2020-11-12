@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import dao.ReadDao;
 import dao.WriteDao;
+import model.AuctionItem;
 import model.Bbs;
 @Service
 public class WriteCatalogImpl implements WriteCatalog {
@@ -30,7 +31,9 @@ public class WriteCatalogImpl implements WriteCatalog {
 		return this.readDao.getBbsCount();
 	}
 
-	public Bbs getBbsDetail(Integer pageNo) {
-		return this.readDao.getBbsDetail(pageNo);
+	public List<Bbs> getBbsDetail() {
+		return this.readDao.getBbsDetail();
 	}
+
+
 }

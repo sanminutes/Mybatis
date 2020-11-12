@@ -6,21 +6,40 @@
 		select max(writing_id) from
 		brand_item
 	</select>
+	<select id="getatMaxId" resultType="Integer">
+	select max(a_num) from auction
+	</select>
 	<insert id="putImageWriting" parameterType="model.ItemWriting">
 		insert into
 		brand_item
 		values(#{writing_id},#{title},#{writer_name},#{price},#{charge_price},#{delivery},#{image1},#{image2},#{country},#{comments},#{options1},#{options2},#{category})
 	</insert>
+		<insert id="putatImageWriting" parameterType="model.AuctionItem">
+		insert into
+		auction
+		values(#{a_num},#{a_name},#{a_price},#{a_id}, #{a_date} ,#{image}, #{a_direct_p})
+	</insert>
+	<select id="getauction" resultType="model.AuctionItem">
+		select * from auction
+	</select>
+	<select id="getatList" parameterType="String" resultType="model.AuctionItem">
+	select * from auction where a_num = #{id}
+	</select>
 	<select id="getImageList" parameterType="model.Condition"
 		resultType="model.ItemWriting">
-		select writing_id, title, writer_name, price, charge_price, delivery, image1, image2, country, options1, options2, comments, category
+		select writing_id, title, writer_name, price, charge_price,
+		delivery, image1, image2, country, options1, options2, comments,
+		category
 		from (select a.*, rownum rn from
-		(select * from brand_item where category = #{c_num}
+		(select * from brand_item
+		where category = #{c_num}
 		order by writing_id) a)
-		where rn between #{startRow}
+		where rn between
+		#{startRow}
 		and #{endRow}
 	</select>
-	<select id="getTotalCnt" parameterType="Integer" resultType="Integer">
+	<select id="getTotalCnt" parameterType="Integer"
+		resultType="Integer">
 		select count(*) from
 		brand_item where category = #{category}
 	</select>
@@ -43,9 +62,11 @@
 	<select id="selectRownum" parameterType="Integer"
 		resultType="Integer">
 		select rn
-		from (select a.*, rownum rn from (select writing_id
+		from (select a.*, rownum rn from (select
+		writing_id
 		from BRAND_ITEM order by WRITING_ID desc) a)
-		where writing_id = #{writing_id}
+		where writing_id
+		= #{writing_id}
 	</select>
 	<update id="updateOrderNo" parameterType="model.Writing">
 		update image_writing
@@ -54,6 +75,24 @@
 		>= #{order_no}
 	</update>
 	<select id="getCategory" resultType="model.Category">
-	select c_num, c_name from category
+		select c_num, c_name from category
+	</select>
+	<select id="gettitle" parameterType="String"
+		resultType="model.ItemWriting">
+		select * from brand_item where title = #{title}
+	</select>
+	<select id="getsearch" parameterType="String"
+		resultType="model.ItemWriting">
+		select * from brand_item where writer_name like '%' ||#{keyword}|| '%'
+	</select>
+	<insert id="getheaven" parameterType="model.AuctionItem">
+		insert into auction_mb values(#{a_num},#{a_id},#{a_high_p},#{a_date})	
+	</insert>
+	<select id="selectCnt" resultType="Integer" >
+	select count(*) from auction_mb
+	</select>
+	
+		<select id="selectMax" resultType="Integer" >
+	select max(b_price) from auction_mb
 	</select>
 </mapper>

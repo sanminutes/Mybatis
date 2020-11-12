@@ -19,8 +19,8 @@ public class ReadDaoImpl implements ReadDao {
 		return session.selectOne("mapper.usersMapper.getBBSCount");
 	}
 
-	public Bbs getBbsDetail(Integer no) {
-		return session.selectOne("mapper.usersMapper.getBBSRead", no);
+	public List<Bbs> getBbsDetail() {
+		return session.selectList("mapper.usersMapper.getBBSRead");
 	}
 
 }

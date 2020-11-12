@@ -15,9 +15,8 @@
 			where id= #{id} and password = #{pwd} 중복으로 받을땐 -->
 	</select>
 
-	<select id="getBBSRead" parameterType="Integer"
-		resultType="model.Bbs">
-		select * from bbs where seqno = #{seqno}
+	<select id="getBBSRead" resultType="model.Bbs">
+		select * from bbs order by seqno desc
 	</select>
 	<select id="getBBSCount" resultType="Integer">
 		select count(*) from bbs
@@ -34,8 +33,7 @@
 	</select>
 	<insert id="putMember" parameterType="model.Custom_info">
 		insert into custom_info
-		values(#{id}, #{password}, #{name}, #{addr}, #{email}, #{gender},
-		#{job})
+		values(#{id}, #{password}, #{name}, #{addr}, #{email}, #{gender}, #{job}, #{lv})
 	</insert>
 	<select id="getItemID" parameterType="String"
 		resultType="Integer">
@@ -88,6 +86,10 @@
 	<select id="getPassword" resultType="String"
 		parameterType="String">
 		select password from custom_info where id = #{id}
+	</select>
+		<select id="getLevel" resultType="Integer"
+		parameterType="String">
+		select lv from custom_info where id = #{id}
 	</select>
 	<select id="getIdCnt" resultType="Integer"
 		parameterType="String">

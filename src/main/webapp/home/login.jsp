@@ -71,7 +71,7 @@ table {
 			<tr>
 				<td width="10" height="10" align="center"><a
 					href="../home/userentry.html"><font color="black" size="2px">아이디
-							찾기</font></a>│<a href="../home/userentry.html"><font color="black"
+							찾기</font></a>│<a href="#" onClick="window.open('../find/findpwd.html','find','width=400,height=400').focus()"><font color="black"
 						size="2px">비밀번호 찾기</font></a>│<a href="../home/userentry.html"><font
 						color="black" size="2px">회원가입</font></a></td>
 

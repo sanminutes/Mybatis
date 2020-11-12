@@ -2,6 +2,7 @@ package logic;
 
 import java.util.List;
 
+import model.AuctionItem;
 import model.Bbs;
 
 public interface WriteCatalog {
@@ -10,5 +11,5 @@ public interface WriteCatalog {
 	
 	List<Bbs> readBbs(Integer pageNo);
 	Integer getBbsCount();
-	Bbs getBbsDetail(Integer pageNo);
+	List<Bbs> getBbsDetail();
 }

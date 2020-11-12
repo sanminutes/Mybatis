@@ -3,6 +3,8 @@ package controller;
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dao.WriteDao;
+import model.AuctionItem;
 import model.Category;
 import model.Condition;
 import model.Custom_info;
@@ -91,9 +94,7 @@ public class WriteController {
 			PAGE_NUM = 1;
 		ModelAndView mav = new ModelAndView("home/index");
 		if (SEQNO != null) {
-			System.out.println("ROWNUM : "+SEQNO);
 			int rownum = writeDao.selectRownum(SEQNO);
-			System.out.println("ROWNUM : "+rownum);
 			int page = rownum / 20;
 			if (rownum % 20 != 0)
 				page++;
@@ -207,6 +208,102 @@ public class WriteController {
 			mav.addObject("BODY", "writeForm.jsp");
 			mav.addObject(new ItemWriting());
 		}
+		return mav;
+	}
+
+	@RequestMapping(value = "/write/titlelist.html")
+	public ModelAndView form(String title) {
+		ModelAndView mav = new ModelAndView("home/index");
+		List<ItemWriting> titleList = writeDao.gettitle(title);
+		mav.addObject("TITLE", titleList);
+		mav.addObject("BODY", "title.jsp");
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/write/atwriteform.html")
+	public ModelAndView atform(HttpSession session) {
+		String id = (String) session.getAttribute("loginUser");
+		ModelAndView mav = new ModelAndView("home/index");
+		if (id == null) {
+			mav.addObject("NOLOGIN", "yes");
+			mav.addObject("guest", new Custom_info());
+			mav.addObject("BODY", "login.jsp");
+		} else {
+			List<Category> category = writeDao.getCategory();
+			mav.addObject("category", category);
+			mav.addObject("BODY", "auction.jsp");
+			mav.addObject(new AuctionItem());
+		}
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/write/atwrite.html")
+	public ModelAndView atwrite(@Valid @ModelAttribute AuctionItem auctionItem, BindingResult br, HttpSession session) {
+		String id = (String) session.getAttribute("loginUser");
+		MultipartFile multifile = auctionItem.getImageA();
+		String fileName = null;
+		String path = null;
+		OutputStream os = null;
+		if (multifile != null) {
+			fileName = multifile.getOriginalFilename();
+			ServletContext ctx = session.getServletContext();
+			path = ctx.getRealPath("/upload/" + fileName);
+			try {
+				os = new FileOutputStream(path);
+				BufferedInputStream bis = new BufferedInputStream(multifile.getInputStream());
+				byte[] buffer = new byte[8156];
+				int read = 0;
+				while ((read = bis.read(buffer)) > 0) {
+					os.write(buffer, 0, read);
+				}
+
+			} catch (Exception e) {
+
+			}
+			auctionItem.setImage(fileName);
+		}
+		Integer maxId = writeDao.getMaxatWritingId();
+		auctionItem.setA_num(maxId + 1);
+		auctionItem.setA_id(id);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss");
+		Date time = new Date();
+		String a_date = format1.format(time);
+		auctionItem.setA_date(a_date);
+		writeDao.insertatWriting(auctionItem);
+		ModelAndView mav = new ModelAndView("home/index");
+		mav.addObject("BODY", "auctionResult.jsp?SEQNO=" + (maxId + 1));
+		return mav;
+
+	}
+
+	@RequestMapping(value = "/write/atwriteList.html")
+	public ModelAndView awlist(Integer SEQNO, Integer PAGE_NUM, Integer category) {
+		List<AuctionItem> getatItem = writeDao.getAuctionItem();
+		ModelAndView mav = new ModelAndView("home/index");
+		mav.addObject("AuctionItem", getatItem);
+		mav.addObject("BODY", "imageAuctionList.jsp");
+		return mav;
+	}
+
+	@RequestMapping(value = "/write/auctioninfo.html")
+	public ModelAndView auctiontime(AuctionItem auctionItem, Integer a_high_p, Integer a_num, String a_id) {
+		System.out.println(a_high_p);
+		System.out.println(a_num);
+		System.out.println(a_id);
+		ModelAndView mav = new ModelAndView("home/index");
+		auctionItem.setA_id(a_id);
+		auctionItem.setA_high_p(a_high_p);
+		auctionItem.setA_num(a_num);
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+		Date time = new Date();
+		String a_date = format1.format(time);
+		auctionItem.setA_date(a_date);
+		writeDao.getheaven(auctionItem);
+		mav.addObject("ID", a_num);
+		mav.addObject("BODY", "readAtResult.jsp");
+
 		return mav;
 	}
 
