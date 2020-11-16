@@ -122,12 +122,12 @@ public class WriteDaoImpl implements WriteDao {
 		return session.selectList("mapper.uploadMapper.getheaven", auctionItem);
 	}
 
-	public Integer selectCnt() {
-		return session.selectOne("mapper.uploadMapper.selectCnt");
+	public Integer selectCnt(Integer id) {
+		return session.selectOne("mapper.uploadMapper.selectCnt", id);
 	}
 
-	public Integer selectMax() {
-		return session.selectOne("mapper.uploadMapper.selectMax");
+	public Integer selectMax(Integer id) {
+		return session.selectOne("mapper.uploadMapper.selectMax", id);
 	}
 
 

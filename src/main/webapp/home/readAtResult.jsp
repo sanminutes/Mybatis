@@ -9,7 +9,6 @@
 <body>
  ${ID}
 	<script type="text/javascript">
-		alert("입찰이 완료되었습니다.");
 		location.href = "../read/readAuction.html?id=" + ${ID};
 	</script>
 </body>

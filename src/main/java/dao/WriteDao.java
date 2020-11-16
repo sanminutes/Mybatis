@@ -45,8 +45,8 @@ public interface WriteDao {
 	
 	List<AuctionItem> getheaven(AuctionItem auctionItem);
 	
-	Integer selectCnt();
-	Integer selectMax();
+	Integer selectCnt(Integer Id);
+	Integer selectMax(Integer Id);
 	
 	
 }

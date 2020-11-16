@@ -9,90 +9,91 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript">
-var g_Timer = 0;
-var g_DBNowTime = new Date(); // 현재시간
-	var g_LastTime= new Date(g_DBNowTime); //경매 마감 시간
-	g_LastTime.setSeconds(g_LastTime.getSeconds()+10);
-/* 	g_LastTime.setDate(g_LastTime.getDate()+1); */
-
-function Countdown() {
-
-	var NowTime = new Date(g_DBNowTime.getTime() + (g_Timer * 1000));
-
-	var iGap = Math
-			.floor((g_LastTime.getTime() - NowTime.getTime()) / (1000));
-	var strLastTime = "";
-
-	if (iGap > 0) // 종료전
-	{
-		strLastTime = FormatGap(iGap, "full");
-
-		setTimeout("Countdown()", 1000);
-		g_Timer = g_Timer + 1;
-	}		
-	else // 종료 후
-	{
-		document.getElementById('a_high_p').disabled = true;
-		strLastTime = "이 물품은 경매마감되었습니다.";
-
-
-	}
+//86400000ms는 1day를 의미한다.
+//1s = 1,000ms
+//1m = 60s * 1,000ms = 60,000ms
+//1h = 60m * 60,000ms = 3,600,000ms
+//1d = 24h * 3,600,000ms = 86,400,000ms
+/* 	var g_Timer = 0;
+	var g_DBNowTime = new Date(${auction.a_date}); // 현재시간
+	var g_LastTime = new Date(${auction.a_date}); //경매 마감 시간
+	g_LastTime.setTime(g_LastTime.getTime()+86400000);
 	
-	if(frm5.diwp.value<=frm5.nowp.value){
-		document.getElementById('a_high_p').disabled = true;
-		strLastTime = "이 물품은 조기마감 되었습니다다.";
+	var g_location = new Date(); // 실시간 시간
+	/* 	g_LastTime.setDate(g_LastTime.getDate()+1); */
+ function reverse_counter(){
+var today = new Date();
+var d_day = new Date('${auction.a_date}');
+days = (d_day - today) / 1000 / 60 / 60 / 24;
+daysRound = Math.floor(days);
+hours = (d_day - today) / 1000 / 60 / 60 - (24 * daysRound);
+hoursRound = Math.floor(hours);
+minutes = (d_day - today) / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
+minutesRound = Math.floor(minutes);
+seconds = (d_day - today) / 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) -
+ (60 * minutesRound);
 
-	}
+secondsRound = Math.round(seconds);
+sec = " 秒"
+min = " 分, "
+hr = " 時間, "
+dy = " 日, "
+	document.getElementById("hdivMessage").innerHTML = daysRound  +
+dy + hoursRound + hr + minutesRound + min + secondsRound + sec;
+newtime = window.setTimeout("reverse_counter();", 1000);
 
-
-	if (document.getElementById("hdivMessage") != "undefined") {
-		document.getElementById("hdivMessage").innerHTML = strLastTime;
-
-	}
+var pattern = /[^(0-9)]/gi; 
+var a = frm5.diwp.value; //즉시결제가
+var b = frm5.nowp.value; //현재가
+if(pattern.test(a)){
+	a = a.replace(pattern,"");
+	a = Number(a);
+}
+if(pattern.test(b)){
+	b = b.replace(pattern,"");
+	b = Number(b);
 }
 
-function FormatGap(iGap, format) {
-	var iGapTime = new Date(2000, 0, 1, 0, 0, iGap);
-	var strLeftTime = "";
-
-	if (format == "full") {
-		if (iGapTime.getMonth() > 0 || iGapTime.getDate() > 1)
-			strLeftTime = "<span class='fc'>"
-					+ Math.floor(iGap / (60 * 60 * 24)) + "일 </span>";
-		return strLeftTime + "<span class='fc'>" + iGapTime.getHours()
-				+ "시간 " + iGapTime.getMinutes() + "분 "
-				+ iGapTime.getSeconds() + "초 </span>";
-	} else {
-		return "<span class='fc'>" + iGapTime.getMinutes() + "분 "
-				+ iGapTime.getSeconds() + "초 </span>";
-	}
-	
-
+if(daysRound<0 || a <= b){
+	document.getElementById('a_high_p').disabled = true;
+	document.getElementById("hdivMessage").innerHTML = "このオークションは終了しています。";
 }
-	function ipchal(){
-		var tmp = frm5.nowp.value;
-		tmp = Number(tmp);
-		alert(tmp);
+	}
 
-		if(frm5.a_high_p.value==""){
-			alert("입찰가를 입력하세요");
+	function ipchal() {
+		var pattern = /[^(0-9)]/gi; 
+		var a = frm5.diwp.value; //즉시결제가
+		var b = frm5.nowp.value; //현재가
+		var c = frm5.a_high_p.value; //입력가
+
+		a = a.replace(pattern,"");
+		a = Number(a);
+		b = b.replace(pattern,"");
+		b = Number(b);
+		c = c.replace(pattern,"");
+		c = Number(c);
+		
+		alert(frm5.a_high_p.value <= b);
+		if (frm5.a_high_p.value == "") {
+			alert("金額を入力してください");
 			frm5.a_high_p.focus();
 			return false;
-		}
-		else if(isNaN(frm5.a_high_p.value)!=0){
-			alert("입찰가를 숫자로 입력하세요");
+		} else if (isNaN(frm5.a_high_p.value) != 0) {
+			alert("金額は数字だけで入力してください");
 			frm5.a_high_p.select();
 			return false;
-		}
-		else if(frm5.a_high_p.value<=tmp){
-			alert("입찰가가 현재가보다 낮습니다.");
+		} else if (c <= b) {
+			alert("最低入礼額を下回っています");
 			frm5.a_high_p.select();
 			return false;
-		}
-		else{
-			alert("[입찰가] : "+frm5.a_high_p.value+" 입찰되셨습니다.");
-			frm5.nowp.value=frm5.a_high_p.value;
-			frm5.nowp.disabled=true;
+		} else if (c>a){
+				alert("即決額より入礼額が高いです");
+				frm5.a_high_p.select();
+				return false;
+		} else {
+			alert("[入礼額] : " + frm5.a_high_p.value + "円で入礼されました");
+			frm5.nowp.value = frm5.a_high_p.value;
+			frm5.nowp.disabled = true;
 		}
 		return true;
 	}
@@ -142,7 +143,7 @@ function FormatGap(iGap, format) {
 }
 </Style>
 </head>
-<body>
+<body onLoad="reverse_counter()">
 	<c:if test="${empty auction }">
 존재하지 않는 글입니다.
 </c:if>
@@ -150,7 +151,6 @@ function FormatGap(iGap, format) {
 		<br />
 		<form name="frm5" action="../write/auctioninfo.html" method="post">
 			<input type="hidden" name="a_num" value="${auction.a_num }">
-			<input type="hidden" name="a_id" value="${sessionScope.loginUser }">
 			<table width="1100px" align="center"
 				style="font-family: 'Nanum Gothic', sans-serif;">
 				<tr>
@@ -159,35 +159,61 @@ function FormatGap(iGap, format) {
 						src="../img/${auction.a_num }.jpeg" width="500" height="500"></td>
 					<td colspan="2" width="500"><div>
 							<div style="float: left">
-								<font size="3" color="#BDBDBD"> 판매자 : ${auction.a_id }</font><br />
+								<font size="3" color="#BDBDBD"> 出品者 : ${auction.a_id }</font><br />
 							</div>
 							<div align="right">
 
-								<font size="3" color="#BDBDBD">상품번호 : ${auction.a_num}</font>
+								<font size="3" color="#BDBDBD">オークションID :
+									${auction.a_num}</font>
 							</div>
 						</div>
-						<hr class="itemhr"> <font size="6"> ${auction.a_name }</font><br />
-						<br /> 즉시결제: <input type="text" name="diwp"
-						value="<fmt:formatNumber
-						value="${auction.a_direct_p }"  />"
-						style="text-align: right" class="invisible">원<br /> <c:choose>
-							<c:when test="${auction.a_price >= max }">현재가 :<input
-									type="text" name="nowp" style="text-align: right"
-									class="invisible"
-									value="<fmt:formatNumber
-						value="${auction.a_price }"  />">
+						<hr class="itemhr"> <font size="6"> ${auction.a_name }</font>（${cnt }件の入礼あり）<br />
+						<br /> <c:choose>
+							<c:when test="${auction.a_price >= max }">
+								<div style="float: left">
+									<font size="5" color="#BDBDBD">現在</font>
+								</div>
+								<div align="right">
+									<input type="text" name="nowp"
+										style="text-align: right; font-size: 20px;" class="invisible"
+										value="<fmt:formatNumber
+						value="${auction.a_price }" />"><font
+										size="5" color="#BDBDBD">円</font>
+								</div>
 							</c:when>
-							<c:otherwise>현재가 :<input type="text" name="nowp"
-									style="text-align: right" class="invisible"
-									value="<fmt:formatNumber
-						value="${max}"  />">
+							<c:otherwise>
+								<div style="float: left">
+									<font size="5" color="#BDBDBD">現在</font>
+								</div>
+								<div align="right">
+									<input type="text" name="nowp"
+										style="text-align: right; font-size: 20px;" class="invisible"
+										value="<fmt:formatNumber
+						value="${max}" />"><font
+										size="5" color="#BDBDBD">円</font>
+								</div>
 							</c:otherwise>
-						</c:choose>원<br /> 입찰가 : <input type="text" name="a_high_p" id="a_high_p" />
-						<br />입찰수: ${cnt }<br />남은 시간 :
+						</c:choose><br />
+						<div style="float: left; margin-top: -20px;">
+							<font size="5" color="#BDBDBD">即決</font>
+						</div>
+						<div align="right" style="margin-top: -20px;">
+							<input type="text" name="diwp"
+								value="<fmt:formatNumber
+						value="${auction.a_direct_p }" />"
+								style="text-align: right; font-size: 20px; color: red;"
+								class="invisible"><font size="5" color="#BDBDBD">円</font>
+						</div> <br /> 残り
 						<div class="t_gold" id="hdivMessage" style="float: right"></div> <br />
-						<br /> <input type="submit" value="입찰" id="cartbutton"
-						onclick="return ipchal()"> <input type="button"
-						onClick="reset()" value="취소" id="buybutton"></td>
+						<hr class="itemhr">
+						<div style="float: left;">入札額</div>
+						<div align="right">
+							<input type="text" name="a_high_p" id="a_high_p"
+								style="font-size: 20px;" /><font size="5" color="#BDBDBD">円</font>
+						</div>
+						<hr class="itemhr"> <input type="submit" value="入礼する"
+						id="cartbutton" onclick="return ipchal()"> <input
+						type="button" onClick="reset()" value="キャンセル" id="buybutton"></td>
 
 					<!-- <c:if
 							test="${empty max  }">0</c:if><c:if

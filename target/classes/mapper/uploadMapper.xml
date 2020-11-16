@@ -20,7 +20,7 @@
 		values(#{a_num},#{a_name},#{a_price},#{a_id}, #{a_date} ,#{image}, #{a_direct_p})
 	</insert>
 	<select id="getauction" resultType="model.AuctionItem">
-		select * from auction
+		select * from auction order by a_num
 	</select>
 	<select id="getatList" parameterType="String" resultType="model.AuctionItem">
 	select * from auction where a_num = #{id}
@@ -88,11 +88,11 @@
 	<insert id="getheaven" parameterType="model.AuctionItem">
 		insert into auction_mb values(#{a_num},#{a_id},#{a_high_p},#{a_date})	
 	</insert>
-	<select id="selectCnt" resultType="Integer" >
-	select count(*) from auction_mb
+	<select id="selectCnt" parameterType="Integer" resultType="Integer" >
+	select count(*) from auction_mb  where a_num = #{a_id}
 	</select>
 	
-		<select id="selectMax" resultType="Integer" >
-	select max(b_price) from auction_mb
+		<select id="selectMax" parameterType="Integer" resultType="Integer" >
+	select max(b_price) from auction_mb where a_num = #{a_id}
 	</select>
 </mapper>

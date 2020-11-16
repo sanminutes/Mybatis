@@ -267,8 +267,9 @@ public class WriteController {
 		Integer maxId = writeDao.getMaxatWritingId();
 		auctionItem.setA_num(maxId + 1);
 		auctionItem.setA_id(id);
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss");
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
+		time.setHours(time.getHours()+1);
 		String a_date = format1.format(time);
 		auctionItem.setA_date(a_date);
 		writeDao.insertatWriting(auctionItem);
@@ -288,15 +289,19 @@ public class WriteController {
 	}
 
 	@RequestMapping(value = "/write/auctioninfo.html")
-	public ModelAndView auctiontime(AuctionItem auctionItem, Integer a_high_p, Integer a_num, String a_id) {
-		System.out.println(a_high_p);
-		System.out.println(a_num);
-		System.out.println(a_id);
+	public ModelAndView auctiontime(AuctionItem auctionItem, Integer a_high_p, Integer a_num, HttpSession session) {
 		ModelAndView mav = new ModelAndView("home/index");
-		auctionItem.setA_id(a_id);
+		String id = (String) session.getAttribute("loginUser");
+		if (id == null) {
+			mav.addObject("guest", new Custom_info());
+			mav.addObject("BODY", "login.jsp");
+			return mav;
+		}
+
+		auctionItem.setA_id(id);
 		auctionItem.setA_high_p(a_high_p);
 		auctionItem.setA_num(a_num);
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date time = new Date();
 		String a_date = format1.format(time);
 		auctionItem.setA_date(a_date);

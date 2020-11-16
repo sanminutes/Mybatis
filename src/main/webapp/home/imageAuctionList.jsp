@@ -16,9 +16,6 @@
 </style>
 </head>
 <body>
-	<c:if test="${loginLevel==2||loginLevel==3 }">
-		<a href="../write/writeForm.html"><font color="black">상품추가(테스트)</font></a>
-	</c:if>
 	<h2 style="margin-top: -10px; margin-left: 45px;">
 		<font size="4">상품정보</font>
 	</h2>
@@ -35,11 +32,7 @@
 						src="../img/${atItem.a_num }.jpeg" width="200" height="200" /><br />
 						<a href="javascript:goView(${atItem.a_num })"
 						style="word-break: break-all;"><font color="black" size="4">${atItem.a_name }</font></a><br />
-						<b><font size="5"><fmt:formatNumber
-									value="${atItem.a_price }" />원</font> </b><br /> <font size="3"><c:if
-								test="${atItem.a_price != 0}">배송비 <fmt:formatNumber
-									value="${atItem.a_price }" />원</c:if> <c:if
-								test="${atItem.a_price == 0}">무료배송</c:if></font><br /></td>
+						</td>
 					<%
 						cnt++;
 					%>

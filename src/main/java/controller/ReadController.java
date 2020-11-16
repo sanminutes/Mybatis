@@ -38,8 +38,8 @@ public class ReadController {
 	public ModelAndView readAuction(Integer id) {
 		ModelAndView mav = new ModelAndView("home/index");
 		AuctionItem auctionItem= writeDao.getAuctionWriting(id);
-		Integer cnt = writeDao.selectCnt();
-		Integer max = writeDao.selectMax();
+		Integer cnt = writeDao.selectCnt(id);
+		Integer max = writeDao.selectMax(id);
 		if(max==null) {
 			max=0;
 		}
